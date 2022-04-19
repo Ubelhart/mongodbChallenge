@@ -1,0 +1,138 @@
+show dbs
+use ecommerce
+db.createCollection("messages");
+db.createCollection("products");
+db.messages.insertMany([
+  {
+    email: "juan@gmail.com",
+    text: "Hola, como estas?",
+    date: "2020-09-12",
+  },
+  {
+    email: "leo@gmail.com",
+    text: "Bien, gracias",
+    date: "2020-09-12",
+  },
+  {
+    email: "feli@gmail.com",
+    text: "Recién llegue a mi casa",
+    date: "2020-09-12",
+  },
+  {
+    email: "ema@gmail.com",
+    text: "Hoy llueve mucho",
+    date: "2020-09-12",
+  },
+  {
+    email: "rodri@gmail.com",
+    text: "Hoy no trabaje por la lluvia",
+    date: "2020-09-12",
+  },
+  {
+    email: "gio@gmail.com",
+    text: "Estamos igual",
+    date: "2020-09-12",
+  },
+  {
+    email: "cin@gmail.com",
+    text: "Hoy empiezo a estudiar",
+    date: "2020-09-12",
+  },
+  {
+    email: "jes@gmail.com",
+    text: "Mal ahi",
+    date: "2020-09-12",
+  },
+  {
+    email: "bru@gmail.com",
+    text: "Que haces",
+    date: "2020-09-12",
+  },
+  {
+    email: "san@gmail.com",
+    text: "Sale un lol",
+    date: "2020-09-12",
+  },
+]);
+db.products.insertMany([
+  {
+    title: "Camisa",
+    thumbnail:
+      "https://www.ecommerce.com/wp-content/uploads/2019/01/camisa-de-hombre-2.jpg",
+    price: 1280,
+  },
+  {
+    title: "Pantalón",
+    thumbnail:
+      "https://www.ecommerce.com/wp-content/uploads/2019/01/pantalon-de-hombre-1.jpg",
+    price: 900,
+  },
+  {
+    title: "Zapatos",
+    thumbnail:
+      "https://www.ecommerce.com/wp-content/uploads/2019/01/zapatos-de-hombre-1.jpg",
+    price: 2860,
+  },
+  {
+    title: "Lentes",
+    thumbnail:
+      "https://www.ecommerce.com/wp-content/uploads/2019/01/lentes-de-hombre-1.jpg",
+    price: 2300,
+  },
+  {
+    title: "Bolsos",
+    thumbnail:
+      "https://www.ecommerce.com/wp-content/uploads/2019/01/bolsos-de-hombre-1.jpg",
+    price: 1700,
+  },
+  {
+    title: "Sandalias",
+    thumbnail:
+      "https://www.ecommerce.com/wp-content/uploads/2019/01/sandalias-de-hombre-1.jpg",
+    price: 4320,
+  },
+  {
+    title: "Blazer",
+    thumbnail:
+      "https://www.ecommerce.com/wp-content/uploads/2019/01/blazer-de-hombre-1.jpg",
+    price: 3350,
+  },
+  {
+    title: "Vestido",
+    thumbnail:
+      "https://www.ecommerce.com/wp-content/uploads/2019/01/vestido-de-hombre-1.jpg",
+    price: 5000,
+  },
+  {
+    title: "Jeans",
+    thumbnail:
+      "https://www.ecommerce.com/wp-content/uploads/2019/01/jeans-de-hombre-1.jpg",
+    price: 4990,
+  },
+  {
+    title: "Polo",
+    thumbnail:
+      "https://www.ecommerce.com/wp-content/uploads/2019/01/polo-de-hombre-1.jpg",
+    price: 580,
+  },
+]);
+db.messages.find({}).pretty();
+db.products.find({}).pretty();
+db.messages.estimatedDocumentCount();
+db.products.estimatedDocumentCount();
+db.products.insertOne({
+  title: "Guantes",
+  thumbnail:
+    "https://www.ecommerce.com/wp-content/uploads/2019/01/guantes-de-hombre-1.jpg",
+  price: 120,
+});
+db.products.find({ title: "Guantes" }).pretty();
+db.products.find({ price: { $lt: 1000 } }).pretty();
+db.products.find({ $and: [{ price: {$gt: 1000} }, { price: {$lt: 3000}}] }).pretty();
+db.products.find({ price: { $gt: 3000 } }).pretty();
+db.products.find({ price: { $gt: 3000 } }, {"title": 1}).skip(2).limit(1).pretty();
+db.products.updateMany({ "price": { $gt: 4000 } }, { $set: { "stock": 100 } })
+db.products.deleteMany({ price: {$lt: 1000} });
+
+use admin
+db.createUser({ user: "pepe", pwd: "asd456", roles: [{ role: "read", db: "ecommerce" }]});
